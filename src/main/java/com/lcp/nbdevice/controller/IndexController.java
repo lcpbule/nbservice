@@ -61,15 +61,15 @@ public class IndexController {
             e.printStackTrace();
         }
 
-        for(;i<s.toString().length();i++)
+        for(;i<s.toString().length()-31;i++)
         {
             if(s.charAt(i) == 0x68)
             {
                 lenth = s.charAt(i+30);
                 i+=31;
-                for(int j=0;j<lenth && (i<toString().length()-6);j++)
+                for(int j=0;j<lenth && (i<toString().length()-7);j++)
                 {
-                   ret =  String.format("%d 时间:%hhu-%hhu-%hhu %hhu:%hhu:%hhu", s.charAt(i + 1), s.charAt(i + 2),
+                   ret = ret+ String.format("%d 时间:%hhu-%hhu-%hhu %hhu:%hhu:%hhu", s.charAt(i + 1), s.charAt(i + 2),
                             s.charAt(i + 3), s.charAt(i + 4), s.charAt(i + 5), s.charAt(i + 6)) + "\n";
                             i+=8;
                 } 
