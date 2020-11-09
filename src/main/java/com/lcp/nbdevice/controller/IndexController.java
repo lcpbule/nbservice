@@ -48,6 +48,7 @@ public class IndexController {
     public Object getBb() {
         int i = 0;
         String ret = "";
+        int j=0;
         StringBuilder s = new StringBuilder();
         int lenth = 0;
         try {
@@ -67,12 +68,15 @@ public class IndexController {
             {
                 lenth = s.charAt(i+30);
                 i+=31;
-                for(int j=0;j<lenth && (i<toString().length()-7);j++)
+                ret+=  "<p>" +String.format("数据%d条   \n", lenth);
+                for(j=0;j<lenth && i<s.toString().length()-7;j++)
                 {
-                   ret = ret+ String.format("%d 时间:%hhu-%hhu-%hhu %hhu:%hhu:%hhu", s.charAt(i + 1), s.charAt(i + 2),
-                            s.charAt(i + 3), s.charAt(i + 4), s.charAt(i + 5), s.charAt(i + 6)) + "\n";
+                   ret = ret+ String.format("%s 时间:%02x-%02x-%02x %02x:%02x:%02x", s.charAt(i + 1)>0?"B->A":"A->B", (int)s.charAt(i + 2),
+                   (int)s.charAt(i + 3), (int)s.charAt(i + 4), (int)s.charAt(i + 5), (int)s.charAt(i + 6),(int)s.charAt(i + 7)) + "\n";
                             i+=8;
-                } 
+
+                }
+                ret+="</p>\n";   
             }
         }
         return ret;
