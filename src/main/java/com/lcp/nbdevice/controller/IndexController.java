@@ -49,6 +49,7 @@ public class IndexController {
         int i = 0;
         String ret = "";
         int j=0;
+        int cmd = 0;
         StringBuilder s = new StringBuilder();
         int lenth = 0;
         try {
@@ -66,17 +67,27 @@ public class IndexController {
         {
             if(s.charAt(i) == 0x68)
             {
-                lenth = s.charAt(i+30);
-                i+=31;
-                ret+=  "<p>" +String.format("数据%d条   \n", lenth);
-                for(j=0;j<lenth && i<s.toString().length()-7;j++)
+    
+                cmd = ( int) ( (s.charAt(i + 26)<< 8) + s.charAt(i + 27));
+                switch(cmd)
                 {
-                   ret = ret+ String.format("%s 时间:%02x-%02x-%02x %02x:%02x:%02x", s.charAt(i + 1)>0?"B->A":"A->B", (int)s.charAt(i + 2),
-                   (int)s.charAt(i + 3), (int)s.charAt(i + 4), (int)s.charAt(i + 5), (int)s.charAt(i + 6),(int)s.charAt(i + 7)) + "\n";
-                            i+=8;
+                case 0x0A01:
+                    lenth = s.charAt(i+30);
+                    i+=31;
+                    ret+=  "<p>" +String.format("数据%d条   \n", lenth);
+                    for(j=0;j<lenth && i<s.toString().length()-7;j++)
+                    {
+                       ret = ret+ String.format("%s 时间:%02x-%02x-%02x %02x:%02x:%02x", s.charAt(i + 1)>0?"B->A":"A->B", (int)s.charAt(i + 2),
+                       (int)s.charAt(i + 3), (int)s.charAt(i + 4), (int)s.charAt(i + 5), (int)s.charAt(i + 6),(int)s.charAt(i + 7)) + "\n";
+                                i+=8;
 
+                    }
+                    ret+="</p>"; 
+                    break;
+                case 0x0A02:
+                    break;
                 }
-                ret+="</p>\n";   
+                  
             }
         }
         return ret;
